@@ -30,23 +30,47 @@ Severity: P2 (UI/UX navigation issue)
 
 ---
 
-## 2.2 Basic Login Testing
+## 2.2 Basic Login Testing (Updated After Section 3 Validation)
 
 | Test Case | Expected | Actual | Status |
 |------------|----------|--------|--------|
 | Sign up as Insurance Client | Account created successfully | ❌ "User not found" error | 🔴 Fail |
-| Login as Client | Redirect to ClientDashboard | ❌ Invalid email or password | 🔴 Fail |
-| Login as Manager | Redirect to ManagerDashboard | ❌ Invalid email or password | 🔴 Fail |
-| Logout | Session cleared | Cannot test due to login failure | ❌ Blocked |
+| Login as Client (correct credentials) | Redirect to ClientDashboard | Logged in successfully | ✅ Pass |
+| Login as Manager (correct credentials) | Redirect to ManagerDashboard | Logged in successfully | ✅ Pass |
+| Login with wrong password | Error message displayed | "Invalid email or password" | ✅ Pass |
+| Login with empty fields | Validation message displayed | "Please enter both email and password" | ✅ Pass |
+| Logout | Session cleared | Works correctly | ✅ Pass |
 
-### Critical Finding:
-Authentication system is non-functional.
+### Updated Findings:
 
+- Login functionality is operational for valid accounts.
+- Validation handling for incorrect credentials works correctly.
+- Logout works properly.
+- Signup flow remains broken.
+- Password reset flow remains broken (see Section 3).
+
+---
+
+### Current Authentication Status Summary
+
+| Component | Status |
+|------------|--------|
+| Login | ✅ Working |
+| Session Persistence | ✅ Working |
+| Logout | ✅ Working |
+| Signup | 🔴 Broken |
+| Forgot / Reset Password | 🔴 Broken |
+
+---
+
+### Updated Severity Assessment
+
+🔴 P0 Critical:
 - Signup returns "User not found"
-- Login fails for all tested roles
-- No account can access dashboard
+- Reset password flow non-functional
 
-Severity: 🔴 P0 (Critical – System unusable)
+🟡 P2 Minor:
+- About/Help navigation inconsistency
 
 ---
 

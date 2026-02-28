@@ -2,8 +2,8 @@
 # 🧪 Insurance System – QA Test Execution Report
 
 Environment: Deployed Web Version  
-Tester: [Your Name]  
-Date: [Insert Date]  
+Tester: Adam  
+Date: 28-2-2026  
 Scope: Manual White-Box Functional Testing  
 Version Tested: Production Deployment  
 

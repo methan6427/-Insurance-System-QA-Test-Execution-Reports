@@ -214,16 +214,103 @@ RBAC Implementation: Working Correctly
 
 ---
 
-# 5️⃣ Claims Testing
+# 5️⃣ Claims Testing (End-to-End Flows)
 
-Status: ❌ Blocked
+## 5.1 Client Creates a Claim (Happy Path)
 
-Claims flows cannot be tested because:
-- Login is non-functional
-- No role can access dashboards
-- No claim can be created
+Result: ✅ Pass
 
-All tests from sections 5.1 – 5.5 blocked.
+- Claim created successfully.
+- Claim appears in client claim list.
+- No submission errors observed.
+
+---
+
+## 5.2 Client Create Claim (Negative Cases)
+
+Result: ⚠️ Partial Validation Enforcement
+
+Field validation behavior:
+
+- Description → Required (cannot submit empty)
+- Claim Amount → Required (cannot submit empty)
+- Service Date → Required (cannot submit empty)
+
+Other fields:
+- Allowed submission even when empty (if optional).
+
+Observation:
+Validation exists but is limited to only three mandatory fields.
+
+Severity: 🟡 P1 (Validation coverage incomplete but functional)
+
+---
+
+## 5.3 Manager Reviews Claim (Approval Path)
+
+Result: ✅ Pass
+
+Manager Side:
+- Claim approved successfully.
+- Status updated immediately.
+
+Client Side:
+- Claim shows status as **"coord review"**
+- Blue side color indicator displayed.
+
+Observation:
+- Status naming inconsistency exists between manager and client view.
+- Manager sees "approved"
+- Client sees "coord review"
+
+Potential lifecycle mismatch (needs clarification of business logic).
+
+Severity: 🟡 P1 (Possible status inconsistency)
+
+---
+
+## 5.4 Manager Rejects Claim (Rejection Path)
+
+Result: ✅ Pass
+
+Manager Side:
+- Claim rejected successfully.
+
+Client Side:
+- Status shows as **"rejected"**
+- Red side color indicator displayed.
+
+Observation:
+- Rejection flow consistent across roles.
+- Status visually clear and correct.
+
+Severity: ✅ No issue
+
+---
+
+## 5.5 Claim Status Lifecycle Consistency
+
+Findings:
+
+- Approval results in client-side status labeled as "coord review"
+- Rejection results in client-side status labeled correctly as "rejected"
+- No blank or unknown statuses observed
+- Color indicators function properly
+
+Risk:
+Potential business logic mismatch between:
+- Manager-approved state
+- Client-visible state ("coord review")
+
+Recommendation:
+Clarify intended claim lifecycle:
+
+Example:
+submitted → coord review → approved → closed
+
+Current implementation suggests intermediate stage handling.
+
+Severity: 🟡 P1 (Needs business clarification, not system failure)
 
 ---
 
